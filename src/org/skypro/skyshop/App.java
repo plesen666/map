@@ -47,7 +47,6 @@ public class App {
         printTitle("10. Поиск товара по имени в пустой корзине");
         productInformation.searchProductBasket(product3);
     }
-
     static void completeTask2(ProductInformation productInformation, SearchEngine searchEngeni) {
         printTitle("ДОМАШНЕЕ ЗАДАНИЕ Полиморфизм. Интерфейсы");
         System.out.println("1. Создали один объект типа SearchEngine c пустым списком ");
