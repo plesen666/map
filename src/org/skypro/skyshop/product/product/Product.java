@@ -1,13 +1,17 @@
 package org.skypro.skyshop.product.product;
 
+import org.skypro.skyshop.product.Searchable;
+
+import java.util.Objects;
+
 public abstract class Product implements Searchable {
-    private  String nameProduct;
+    private String nameProduct;
 
     public Product(String nameProduct) throws IllegalArgumentException {
-        if ((nameProduct == null) || (nameProduct.isBlank())) {
-            throw new IllegalArgumentException("ОШИБКА - НЕ ВВЕДЕНО НАЗВАНИЕ ПРОДУКТА В ПРОДУКТОВОМ МАССИВЕ МАГАЗИНА");
+        if (nameProduct.isBlank()) {
+            throw new IllegalArgumentException("Ошибка - не введено название продукта в продуктовом массиве магазина");
         }
-        this.nameProduct = nameProduct;
+        this.nameProduct = nameProduct.trim();
     }
 
     public String getNameProduct() {
@@ -28,4 +32,20 @@ public abstract class Product implements Searchable {
         return "PRODUCT";
     }
 
+    public String sortingElement() {
+        return nameProduct;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Product product = (Product) object;
+        return Objects.equals(nameProduct, product.nameProduct);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nameProduct);
+    }
 }
