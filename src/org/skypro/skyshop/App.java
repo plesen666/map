@@ -187,7 +187,6 @@ public class App {
             System.out.println("Список пуст, проверьте правильность ввода строки удаления");
         }
     }
-
     static void initialFillingOfBasket(ProductInformation object) {
         List<String> productN = new ArrayList<>();
         productN.add("Хлеб ржаной");
