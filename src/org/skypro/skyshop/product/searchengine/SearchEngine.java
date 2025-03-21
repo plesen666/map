@@ -14,11 +14,10 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String query) {
-        return searchable.stream().filter(Objects::nonNull).filter((product) -> product.sortingElement().toLowerCase()
-                        .contains(query.trim().toLowerCase()))
-                .collect(Collectors.toCollection(() -> new TreeSet<>(new NewComporator())));
+        return searchable.stream()
+                .filter(product -> product != null && product.sortingElement().toLowerCase().contains(query.trim().toLowerCase()))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new NewComparator())));
     }
-
     public Searchable getSearchTerm(String search) throws BestResultNotFound {
         int indexStart = 0;
         int indexStop;

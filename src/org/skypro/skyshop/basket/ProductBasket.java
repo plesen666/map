@@ -33,18 +33,29 @@ public class ProductBasket {
     }
 
     public List<Product> deleteProduct(String query) {
-        List<Product> search = new ArrayList<>();
+        List<Product> deletedProducts = new ArrayList<>();
+
         if (calculateCostBasket() != 0) {
-            search = products.values().stream().flatMap(Collection::stream).filter((product) -> product.getNameProduct().toLowerCase()
-                    .equals(query.toLowerCase().trim())).filter(Objects::nonNull).collect(Collectors.toList());
-            if (!search.isEmpty()) {
-                List<Product> finalSearch = search;
-                Optional.of(search).map(product -> products.get(finalSearch.get(finalSearch.size() - 1).getNameProduct()).removeAll(finalSearch));
+            // Приводим query к нижнему регистру и убираем пробелы
+            String normalizedQuery = query.toLowerCase().trim();
+
+            // Проходим по всем продуктам и ищем совпадения
+            for (List<Product> productList : products.values()) {
+                // Ищем продукты, соответствующие запросу
+                List<Product> matchingProducts = productList.stream()
+                        .filter(product -> product.getNameProduct().toLowerCase().equals(normalizedQuery))
+                        .collect(Collectors.toList());
+
+                // Если нашли совпадения, удаляем их и добавляем в список удаленных
+                if (!matchingProducts.isEmpty()) {
+                    productList.removeAll(matchingProducts);
+                    deletedProducts.addAll(matchingProducts);
+                }
             }
         }
-        return search;
-    }
 
+        return deletedProducts;
+    }
     public boolean checkProductAvailability(String query) {
         if (query.isBlank()) {
             System.out.println("Не введено название поиска товара в корзине");
